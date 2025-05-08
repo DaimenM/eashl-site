@@ -5,10 +5,10 @@ import {
 	SidebarMenu,
 	SidebarMenuItem,
 	SidebarMenuButton,
-	SidebarTrigger,
     SidebarRail
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { PanelLeftIcon } from "lucide-react";
 import {  
     TrophyIcon, 
     LogInIcon,
@@ -20,8 +20,7 @@ export function AppSidebar() {
         <>
 			<Sidebar className="bg-sidebar text-sidebar-foreground w-64 h-screen shadow-lg fixed top-0 left-0 z-50">
             <SidebarRail className="bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/75">
-            <SidebarTrigger className="fixed left-4 top-4 z-[60] bg-blue-600 hover:bg-blue-700 text-white rounded-lg p-2 shadow-lg transition-transform duration-200 ease-in-out hover:scale-105">
-            </SidebarTrigger>
+            <PanelLeftIcon className="h-5 w-5 text-sidebar-foreground" />     
             </SidebarRail>
 				<SidebarHeader className="p-4 bg-gradient-to-b from-blue-900 to-slate-900 text-white rounded-t-lg shadow-lg">
                     <div className="flex items-center gap-2 ">
