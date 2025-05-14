@@ -1,18 +1,17 @@
-// src/app/api/auth/login/route.ts
+// src/app/api/auth/reset-password/route.ts
 import { createServerSupabaseClient } from "@/lib/supabase/server"
-import { loginSchema } from "@/lib/validations/auth"
+import { resetPasswordSchema } from "@/lib/validations/auth"
 import { NextResponse } from "next/server"
 import { type NextRequest } from "next/server"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const validatedData = loginSchema.parse(body)
+    const validatedData = resetPasswordSchema.parse(body)
 
     const supabase = await createServerSupabaseClient()
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: validatedData.email,
-      password: validatedData.password,
+    const { data, error } = await supabase.auth.resetPasswordForEmail(validatedData.email, {
+      redirectTo: `${request.nextUrl.origin}/auth/callback`,
     })
 
     if (error) throw error
@@ -21,7 +20,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.log(error)
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to login" },
+      { error: error instanceof Error ? error.message : "Failed to register" },
       { status: 400 }
     )
   }

@@ -20,8 +20,9 @@ export function AppSidebar() {
         <>
 			<Sidebar className="bg-sidebar text-sidebar-foreground w-64 h-screen shadow-lg fixed top-0 left-0 z-50">
             <SidebarRail className="bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/75">
-            <PanelLeftIcon className="h-5 w-5 text-sidebar-foreground" />     
+            <PanelLeftIcon className="h-5 w-5 text-sidebar-foreground" />
             </SidebarRail>
+              
 				<SidebarHeader className="p-4 bg-gradient-to-b from-blue-900 to-slate-900 text-white rounded-t-lg shadow-lg">
                     <div className="flex items-center gap-2 ">
 					<h2 className="text-xl font-bold">EASHL Leagues</h2>
