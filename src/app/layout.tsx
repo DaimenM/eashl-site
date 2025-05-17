@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar";
 import { AuthProvider } from "@/lib/providers/auth-provider";
 
@@ -33,6 +33,7 @@ export default function RootLayout({
           <SidebarProvider defaultOpen>
             
             <AppSidebar />
+            <SidebarTrigger/>
             <div className="flex-1 flex flex-col min-h-screen">
               {children}
             </div>

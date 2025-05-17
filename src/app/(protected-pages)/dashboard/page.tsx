@@ -6,6 +6,7 @@ import { useSignOut } from "@/lib/utils/auth-utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import LeagueScrollable from "@/components/leaguesScrollable";
 
 export default function DashboardPage() {
   const { session } = useAuthSession();
@@ -48,11 +49,12 @@ export default function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle>My Leagues</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
+            <LeagueScrollable />
             <Button className="w-full" variant="outline" asChild>
-              <Link href="/profile">Update Profile</Link>
+              <Link href="/create-league">Create League</Link>
             </Button>
           </CardContent>
         </Card>
