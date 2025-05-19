@@ -7,10 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import LeagueScrollable from "@/components/leaguesScrollable";
+import { CreateLeagueDialog } from "@/components/create-league";
+import { useState } from "react";
 
 export default function DashboardPage() {
   const { session } = useAuthSession();
   const signOut = useSignOut();
+  const [open, setOpen] = useState(false);
+
 
   return (
     <div className="container mx-auto py-8 space-y-8">
@@ -53,11 +57,12 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent className="space-y-2">
             <LeagueScrollable />
-            <Button className="w-full" variant="outline" asChild>
-              <Link href="/create-league">Create League</Link>
+            <Button className="w-full" variant="outline" asChild onClick={() => setOpen(true)}>
+              <h2>Create League</h2>
             </Button>
           </CardContent>
         </Card>
+        <CreateLeagueDialog open={open} onOpenChange={setOpen} />
       </div>
     </div>
   );
