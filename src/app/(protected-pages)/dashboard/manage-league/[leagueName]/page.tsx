@@ -26,6 +26,31 @@ export default function ManageLeague({ params }: { params: Promise<{ leagueName:
                 <Card className="p-6">
                     <h2 className="text-xl font-semibold mb-4">League Details</h2>
                     <p className="mb-4">Edit league information, settings, and preferences.</p>
+                    <div className="space-y-4 mb-6">
+                        <div className="flex flex-col">
+                            <label className="text-lg font-medium text-gray-500">League Name</label>
+                            <p className="text-base">{league.league_name}</p>
+                        </div>
+                        <div className="flex flex-col">
+                            <label className="text-lg font-medium text-gray-500">Description</label>
+                            <p className="text-base">{league.description || 'No description provided'}</p>
+                        </div>
+                        <div className="flex flex-col">
+                            <label className="text-lg font-medium text-gray-500">Logo URL</label>
+                            {league.logo_url ? (
+                                <div className="flex items-center gap-2">
+                                    <img 
+                                        src={league.logo_url} 
+                                        alt="League logo" 
+                                        className="w-8 h-8 object-contain"
+                                    />
+                                    <p className="text-base truncate">{league.logo_url}</p>
+                                </div>
+                            ) : (
+                                <p className="text-base text-gray-400">No logo uploaded</p>
+                            )}
+                        </div>
+                    </div>
                     <Button 
                         className="w-full" onClick={() => setOpenEdit(true)}
                     >

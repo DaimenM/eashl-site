@@ -21,19 +21,33 @@ export function LeagueButton({ name, description, logoUrl }: LeagueButtonProps) 
     const router = useRouter();
     const {setLeague} = useLeagueStore();
     return (
-        <Card className="w-[300px] hover:bg-slate-100 cursor-pointer">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle>{name}</CardTitle>
+         <Card className="w-full max-w-2xl hover:bg-accent/5 transition-colors duration-200">
+            <div className="flex items-center justify-between p-4">
+                <div className="flex items-center gap-4">
+                    <div className="h-16 w-16 relative rounded-lg overflow-hidden border bg-background">
+                        <img 
+                            src={logoUrl} 
+                            alt={`${name} logo`} 
+                            className="h-full w-full object-contain" 
+                        />
+                    </div>
+                    
+                    <div className="flex flex-col">
+                        <h3 className="font-semibold text-lg leading-none mb-2">
+                            {name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground line-clamp-2">
+                            {description}
+                        </p>
+                    </div>
+                </div>
                 <Button variant="ghost" size="icon" className="h-8 w-8" title="Manage League" onClick={() => {
                     router.push(`dashboard/manage-league/${name}`)
                     setLeague(league)
                     }} >
                     <MoreVertical className="h-4 w-4" />
                 </Button>
-            </CardHeader>
-            <CardContent className="flex justify-center">
-                <img src={logoUrl} alt={`${name} logo`} className="h-24 w-24 object-contain" />
-            </CardContent>
+           </div>
         </Card>
     );
 }
