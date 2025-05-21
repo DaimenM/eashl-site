@@ -16,33 +16,35 @@ import { CreateLeagueSchema } from "@/lib/validations/createLeague"
 import { CreateLeagueFormData } from "@/lib/validations/createLeague"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { UseCreateLeague } from "@/hooks/use-manage-league"
+import { UseUpdateLeague } from "@/hooks/use-manage-league"
+import {League} from "@/types/league"
 
-interface CreateLeagueDialogProps {
+interface EditLeagueDialogProps {
+    league: League
     open: boolean
     onOpenChange: (open: boolean) => void
 }
 
-export function CreateLeagueDialog({ open, onOpenChange }: CreateLeagueDialogProps) {
-    const {isLoading, createLeague} = UseCreateLeague()
+export function EditLeagueDialog({ open, onOpenChange, league }: EditLeagueDialogProps) {
+    const {isLoading, editLeague} = UseUpdateLeague()
     const form = useForm<CreateLeagueFormData>({
     resolver: zodResolver(CreateLeagueSchema),
     defaultValues: {
-        league_name: "",
-      description: "",
-      logo_url: "",
+        league_name: decodeURIComponent(league.league_name),
+      description: league.description,
+      logo_url: league.logo_url,
     },
   });
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="bg-black text-white border border-gray-700">
                 <DialogHeader>
-                    <DialogTitle className="text-white">Create New League</DialogTitle>
+                    <DialogTitle className="text-white">Edit {" "} {decodeURIComponent(league.league_name)}</DialogTitle>
                 </DialogHeader>
                 
                 <div className="space-y-4">
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(createLeague)} className="space-y-4">
+                        <form onSubmit={form.handleSubmit(editLeague)} className="space-y-4">
                             <FormField
                                 control={form.control}
                                 name="league_name"
@@ -87,7 +89,7 @@ export function CreateLeagueDialog({ open, onOpenChange }: CreateLeagueDialogPro
                                 disabled={isLoading}
                                 className="w-full p-2 bg-blue-500 text-white rounded"
                             >
-                                {isLoading ? "Creating league..." : "Create League"}
+                                {isLoading ? "Saving..." : "Save Changes"}
                             </button>
                         </form>
                     </Form>
@@ -96,3 +98,4 @@ export function CreateLeagueDialog({ open, onOpenChange }: CreateLeagueDialogPro
         </Dialog>
     )
 };
+

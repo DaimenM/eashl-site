@@ -19,6 +19,7 @@ export default  function LeaguesScrollable() {
                             <LeagueButton
                                 key={i}
                                 name={league.league_name}
+                                description={league.description}
                                 logoUrl={league.logo_url}
                             />
                         ))}
