@@ -20,25 +20,15 @@ import { useProfile } from "@/hooks/use-profile";
 import { ProfileFormData, profileSchema } from "@/lib/validations/profile";
 
 export default function ProfilePage() {
-  const { profile, updateProfile } = useProfile();
+  const { profile, updateProfile, isLoading } = useProfile();
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      full_name: "",
-      username: "",
-      avatar_url: "",
+      full_name: profile?.full_name || "",
+      username: profile?.username || "",
+      avatar_url: profile?.avatar_url || "",
     },
   });
-
-  useEffect(() => {
-    if (profile) {
-      form.reset({
-        full_name: profile.full_name || "",
-        username: profile.username || "",
-        avatar_url: profile.avatar_url || "",
-      });
-    }
-  }, [profile, form]);
 
   return (
     <div className="container mx-auto py-8">
@@ -114,7 +104,7 @@ export default function ProfilePage() {
               <Button type="button" variant="outline" asChild>
                 <Link href="/dashboard">Cancel</Link>
               </Button>
-              <Button type="submit">Save Changes</Button>
+              <Button type="submit">{isLoading ? 'Saving...': "Save Changes"}</Button>
             </div>
           </form>
         </Form>

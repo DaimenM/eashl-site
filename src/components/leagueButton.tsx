@@ -1,3 +1,4 @@
+
 import { Button } from "./ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { MoreVertical } from "lucide-react"
@@ -10,9 +11,11 @@ interface LeagueButtonProps {
     name: string;
     description: string;
     logoUrl: string;
+    onClick?: (e: React.MouseEvent) => any; 
 }
 
-export function LeagueButton({ name, description, logoUrl }: LeagueButtonProps) {
+export function LeagueButton(props: LeagueButtonProps) {
+    const { name, description, logoUrl, onClick } = props;
     const league = {
         league_name: name,
         description: description,
@@ -21,7 +24,8 @@ export function LeagueButton({ name, description, logoUrl }: LeagueButtonProps) 
     const router = useRouter();
     const {setLeague} = useLeagueStore();
     return (
-         <Card className="w-full max-w-2xl hover:bg-accent/5 transition-colors duration-200">
+         <Card className="w-full max-w-2xl hover:bg-accent/5 transition-colors duration-200"
+         onClick={onClick}>
             <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-4">
                     <div className="h-16 w-16 relative rounded-lg overflow-hidden border bg-background">

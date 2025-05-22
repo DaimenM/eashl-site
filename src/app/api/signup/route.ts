@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     })
     await supabase.auth.updateUser({
       data: {
-        full_name: validatedData.fullName,
+        ...validatedData,
       }
     })
 

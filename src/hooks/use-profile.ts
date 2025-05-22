@@ -48,7 +48,7 @@ export function useProfile(): UseProfile {
     }
 
     fetchProfile();
-  }, [toast]);
+  }, []);
 
   const updateProfile = async (data: ProfileFormData) => {
     try {

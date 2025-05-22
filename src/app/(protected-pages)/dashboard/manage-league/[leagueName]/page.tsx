@@ -16,7 +16,6 @@ import { AddTeamDialog } from '@/components/add-team';
 export default function ManageLeague({ params }: { params: Promise<{ leagueName: string }> }) {
     const [openEdit, setOpenEdit] = useState(false);
     const [openAddTeam, setOpenAddTeam] = useState(false);
-    const resolvedParams = use(params)
     const { league } = useLeagueStore();
     return (
         <div className="container mx-auto p-8">
