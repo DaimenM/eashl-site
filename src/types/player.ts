@@ -1,3 +1,6 @@
 export type Player = {
-    id: string
+    playerId: string
+    username: string
+    teamId: string
+    position: string
 }

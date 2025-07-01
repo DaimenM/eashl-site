@@ -6,6 +6,7 @@ import {useRouter} from "next/navigation"
 import { useLeagueStore } from "@/lib/stores/use-league-store"
 import {League} from "@/types/league"
 import { set } from "zod"
+import { usePathname } from "next/navigation"
 
 interface LeagueButtonProps {
     name: string;
@@ -15,6 +16,7 @@ interface LeagueButtonProps {
 }
 
 export function LeagueButton(props: LeagueButtonProps) {
+    const path = usePathname();
     const { name, description, logoUrl, onClick } = props;
     const league = {
         league_name: name,
@@ -45,12 +47,16 @@ export function LeagueButton(props: LeagueButtonProps) {
                         </p>
                     </div>
                 </div>
-                <Button variant="ghost" size="icon" className="h-8 w-8" title="Manage League" onClick={() => {
+                { path.includes("dashboard") &&(
+                    <Button variant="ghost" size="icon" className="h-8 w-8" title="Manage League" onClick={(e: React.MouseEvent) => {
+                    e.stopPropagation();
                     router.push(`dashboard/manage-league/${name}`)
                     setLeague(league)
                     }} >
                     <MoreVertical className="h-4 w-4" />
                 </Button>
+            )}
+
            </div>
         </Card>
     );

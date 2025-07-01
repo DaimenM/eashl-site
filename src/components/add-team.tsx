@@ -21,14 +21,13 @@ import { CustomAlertDialog } from "./alert"
 import {AlertDialogProps} from "./alert"
 import { searchClub } from "@/hooks/use-manage-teams"
 import { useState } from "react"
-import { on } from "events"
 interface AddTeamDialogProps {
     open: boolean
     onOpenChange: (open: boolean) => void
 }
 
 export function AddTeamDialog({ open, onOpenChange }: AddTeamDialogProps) {
-    const {isLoading , addTeam} = UseAddTeam()
+    const {addTeam, isLoading} = UseAddTeam()
     const [alertOpen, setAlertOpen] = useState(false)
     const [officialClubName, setOfficialClubName] = useState("")
     const [officialClubId, setOfficialClubId] = useState("")
@@ -48,7 +47,11 @@ export function AddTeamDialog({ open, onOpenChange }: AddTeamDialogProps) {
         cancelText: "Cancel",
         confirmText: isLoading ? "Adding Team..." : "Add Team",
         onConfirm: async () => {
-            await addTeam(form.getValues(),{clubId:officialClubId, clubName: officialClubName} )
+            await addTeam(await searchClub({
+                clubName: form.getValues("clubName"),
+                clubId: form.getValues("clubId"),
+                logo: form.getValues("logo")
+            }))
             alertDialogProps.onOpenChange(false)
             onOpenChange(false)
         }
@@ -56,10 +59,14 @@ export function AddTeamDialog({ open, onOpenChange }: AddTeamDialogProps) {
     const handleSearch = async(e: React.MouseEvent) => {
         e.preventDefault()
         try{
-            const club = await searchClub(form.getValues("clubName"),form.getValues("clubId"))
-            if(club){
-                setOfficialClubName(club.body.clubName)
-                setOfficialClubId(club.body.clubId)
+            const team = await searchClub({
+                clubName: form.getValues("clubName"),
+                clubId: form.getValues("clubId"),
+                logo: form.getValues("logo")
+            })
+            if(team){
+                setOfficialClubName(team.club.clubName)
+                setOfficialClubId(team.club.clubId)
                 console.log('club found')
             }
             setAlertOpen(true)

@@ -6,7 +6,7 @@ import { useLeagueStore } from "@/lib/stores/use-league-store"
 import { useTeamStore } from "@/lib/stores/use-team-store"
 interface UseAddTeam {
     isLoading: boolean
-    addTeam: (data: AddTeamFormData,clubInfo: any) => Promise<void>
+    addTeam: (clubInfo: any) => Promise<void>
 }
 interface UseDeleteTeam {
     isLoading: boolean
@@ -16,17 +16,14 @@ interface UseDeleteTeam {
 export function UseAddTeam() : UseAddTeam {
     const {league} = useLeagueStore()
     const [isLoading, setIsLoading] = useState(false)
-    async function addTeam(data:AddTeamFormData,clubInfo: any) {
+    async function addTeam(clubInfo: any) {
     try{
+        console.log("info", clubInfo)
         setIsLoading(true)
         const response = await fetch("/api/teams", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({clubId:clubInfo.clubId,
-                                    clubName: clubInfo.clubName,
-                                    logo:data.logo,
-                                    league: league.league_name,
-                                }),
+            body: JSON.stringify({ ...clubInfo, league: league.league_name }),
         })
 
         if (!response.ok) {
@@ -44,15 +41,16 @@ export function UseAddTeam() : UseAddTeam {
     return { isLoading, addTeam }
 }
 
-export async function searchClub(name:string,id:string) {
+export async function searchClub(form: AddTeamFormData) {
     try{
-        const response = await fetch(`/api/stats?clubId=${id}&clubName=${name}`)
+        const response = await fetch(`/api/stats?clubId=${form.clubId}&clubName=${form.clubName}`)
         if (!response.ok) {
             const error = await response.json()
             throw new Error(error.error)
         }
         const data = await response.json()
-        return data
+        console.log(data)
+        return {...data, logo: form.logo}
     } catch (error) {
         console.error(error instanceof Error ? error.message : "Failed to  add Team");
     }
